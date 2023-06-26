@@ -1,0 +1,25 @@
+{% load blog_tags %}
+
+<!--================ Blog slider start =================-->
+
+    <section>
+        <div class="container">
+            <div class="owl-carousel owl-theme blog-slider">
+                {% get_post_for_slider as posts %}
+                {% for post in posts %}
+                <div class="card blog__slide text-center">
+                    <div class="blog__slide__img">
+                        <img class="card-img rounded-0 img-slider" src='{{ post.header_photo.url }}' alt="">
+                    </div>
+                    <div class="blog__slide__content">
+                        <a class="blog__slide__label" href="{{ post.get_absolute_url }}">Читать</a>
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.name }}</a></h3>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!--================ Blog slider end =================-->

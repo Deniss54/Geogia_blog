@@ -1,0 +1,71 @@
+{% extends 'blog/base_user.html' %}
+
+
+{% block content %}
+
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+
+
+<style>
+    /* CSS стили для увеличения размера поля контента */
+    .ck-editor__editable {
+        min-height: 175px;
+    }
+</style>
+
+
+<div class="container">
+    <h4>Добавление поста</h4>
+    {% if form.errors %}
+    <div class="alert alert-success alert-warning
+                 alert-dismissible fade show" role="alert">
+        {% for errors in form.errors.values %}
+        {{ errors }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group ">
+            <div class="form-group col-lg-4 col-md-4 pl-0">
+                <input class="form-control" name="name" placeholder="Название поста">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="{{ form.header_photo.id_for_label }}">{{form.header_photo.label}}: </label>
+            {{ form.header_photo }}
+            <div class="form-error">{{ form.header_photo.errors }}</div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control mb-10" rows="10" name="content" placeholder="Для перехода на новую строку Shift + Enter, создать новый абзац (параграф) Enter" id="editor"
+                      ></textarea>
+            <div class="form-error">{{ form.content.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.cat.id_for_label }}">{{form.cat.label}}: </label>
+            {{ form.cat }}
+            <div class="form-error">{{ form.cat.errors }}</div>
+        </div>
+        <div class="mt-3 mb-5">
+            <button type="submit" class="button button--active button-contactForm">
+                Опубликовать
+            </button>
+        </div>
+    </form>
+</div>
+
+{% include 'blog/include/footer.html' %}
+
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            height: '175px', // Высота поля CKEditor в пикселях
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+
+{% endblock %}

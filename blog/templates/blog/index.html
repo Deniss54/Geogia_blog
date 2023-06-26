@@ -1,0 +1,71 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+
+{% if cat_selected != 0 %}
+<div class="row">
+    {% endif %}
+
+    {% for post in posts_list %}
+    {% if cat_selected != 0 %}
+
+    <div class="col-md-6">
+        <div class="single-recent-blog-post card-view ">
+            <div class="thumb">
+                {% if post.header_photo %}
+                <img class="img-fluid img-list" src="{{ post.header_photo.url }}" alt="">
+                {% endif %}
+                <ul class="thumb-info">
+                    <li><a href="{% url 'posts_by_author' author_name=post.author  author_id=post.author.id %}"><i class="ti-user"></i>{{ post.author|capfirst }}</a></li>
+                    <li><a href="#"><i class="ti-themify-favicon"></i>2 Comments</a></li>
+                </ul>
+            </div>
+            <div class="details mt-20">
+                <a href="blog-single.html">
+                    <h3>{{ post.name }}</h3>
+                </a>
+                <p>{{ post.content|truncatewords:40 |safe }}</p>
+                <a class="button" href="{{ post.get_absolute_url }}">Читать <i class="ti-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="single-recent-blog-post ">
+        <div class="thumb">
+            {% if post.header_photo %}
+            <img class="img-fluid img-list" src="{{ post.header_photo.url }}" alt="">
+            {% endif %}
+            <ul class="thumb-info">
+                <li><a href="{% url 'posts_by_author' author_name=post.author  author_id=post.author.id %}"><i class="ti-user"></i>{{ post.author|capfirst }}</a></li>
+                <li><p ><i class="ti-notepad"></i>{{ post.time_creat|date:"F Y" }}</p></li>
+                <li><a href="#"><i class="ti-themify-favicon"></i>2 Comments</a></li>
+            </ul>
+        </div>
+        <div class="details mt-20">
+            <a href="{{ post.get_absolute_url }}">
+                <h3>{{ post.name }}</h3>
+            </a>
+            <p class="tag-list-inline">Tag: <a href="#">travel</a>, <a href="#">life style</a>, <a
+                    href="#">technology</a>, <a href="#">fashion</a></p>
+            <p class="tag-list-inline ">Категория: <a class="category-name" href="#">{{post.cat.name }} </a></p>
+            <p>{{ post.content|truncatewords:40 |safe }}</p>
+            <a class="button" href="{{ post.get_absolute_url }}">Читать <i class="ti-arrow-right"></i></a>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% if cat_selected != 0 %}
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-lg-12">
+        <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+                {% include 'blog/include/pagination.html' %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}

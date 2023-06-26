@@ -1,0 +1,183 @@
+{% load static %}
+{% load blog_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="icon" href="img/Fevicon.png" type="image/png">
+
+    <link rel="stylesheet" href="{% static 'blog/vendors/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/linericon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/owl-carousel/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/owl-carousel/owl.carousel.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+
+</head>
+<body>
+<!--================Header Menu Area =================-->
+{% get_categories as categories %}
+{% include 'blog/include/header_menu.html' %}
+<!--================Header Menu Area =================-->
+
+<main class="site-main">
+    <!--================Hero Banner start =================-->
+    {% if not post %}
+    <section class="mb-30px">
+        <div class="container">
+            <div class="hero-banner">
+                {% if cat_selected == 0 %}
+                <div class="hero-banner__content">
+
+                    <h1>Amazing Places on earth</h1>
+
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!--================Hero Banner end =================-->
+    <!-- Место для слайдера--->
+    {% if cat_selected == 0 %}
+    {% include 'blog/include/base_slider.html' %}
+    {% endif %}
+    <!--================ Start Blog Post Area =================-->
+    <section class="blog-post-area section-margin mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- место для контента --->
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
+                <!-- Start Blog Post Siddebar -->
+                <div class="col-lg-4 sidebar-widgets">
+                    <div class="widget-wrap ">
+                        {% include 'blog/include/search.html' %}
+                        <div class="single-sidebar-widget post-category-widget">
+                            <h4 class="single-sidebar-widget__title">Категории</h4>
+                            <ul class="cat-list mt-20">
+
+                                {% for cat in categories %}
+                                <li>
+                                    <a href="{{ cat.get_absolute_url }}" class="d-flex justify-content-between">
+                                        <p class="{% if cat.pk == cat_selected %} category-name {% endif %} ">
+                                            {{ cat.name }}
+                                        </p>
+                                        <p>
+                                            ({{ cat.post_set.count }})
+                                        </p>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="single-sidebar-widget popular-post-widget">
+                            <h4 class="single-sidebar-widget__title">Самые обсуждаемые</h4>
+                            <div class="popular-post-list">
+                                <div class="single-post-list">
+                                    <div class="thumb">
+                                        <img class="card-img rounded-0"
+                                             src="{% static 'blog/img/blog/thumb/thumb1.png' %}" alt="">
+                                        <ul class="thumb-info">
+                                            <li><a href="#">Adam Colinge</a></li>
+                                            <li><a href="#">Dec 15</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="details mt-20">
+                                        <a href="blog-single.html">
+                                            <h6>Accused of assaulting flight attendant miktake alaways</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="single-post-list">
+                                    <div class="thumb">
+                                        <img class="card-img rounded-0" src="img/blog/thumb/thumb2.png" alt="">
+                                        <ul class="thumb-info">
+                                            <li><a href="#">Adam Colinge</a></li>
+                                            <li><a href="#">Dec 15</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="details mt-20">
+                                        <a href="blog-single.html">
+                                            <h6>Tennessee outback steakhouse the
+                                                worker diagnosed</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="single-post-list">
+                                    <div class="thumb">
+                                        <img class="card-img rounded-0" src="img/blog/thumb/thumb3.png" alt="">
+                                        <ul class="thumb-info">
+                                            <li><a href="#">Adam Colinge</a></li>
+                                            <li><a href="#">Dec 15</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="details mt-20">
+                                        <a href="blog-single.html">
+                                            <h6>Tennessee outback steakhouse the
+                                                worker diagnosed</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-sidebar-widget tag_cloud_widget">
+                            <h4 class="single-sidebar-widget__title">Popular Post</h4>
+                            <ul class="list">
+                                <li>
+                                    <a href="#">project</a>
+                                </li>
+                                <li>
+                                    <a href="#">love</a>
+                                </li>
+                                <li>
+                                    <a href="#">technology</a>
+                                </li>
+                                <li>
+                                    <a href="#">travel</a>
+                                </li>
+                                <li>
+                                    <a href="#">software</a>
+                                </li>
+                                <li>
+                                    <a href="#">life style</a>
+                                </li>
+                                <li>
+                                    <a href="#">design</a>
+                                </li>
+                                <li>
+                                    <a href="#">illustration</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Blog Post Siddebar -->
+        </div>
+    </section>
+    <!--================ End Blog Post Area =================-->
+</main>
+
+<!--================ Start Footer Area =================-->
+{% include 'blog/include/footer.html' %}
+<!--================ End Footer Area =================-->
+
+<script src="{% static 'blog/vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'blog/vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'blog/vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'blog/js/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{% static 'blog/js/mail-script.js' %}"></script>
+<script src="{% static 'blog/js/main.js' %}"></script>
+</body>
+</html>

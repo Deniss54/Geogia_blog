@@ -1,0 +1,8 @@
+<h1>Удаление поста</h1>
+
+<p>Вы действительно хотите удалить пост "{{ post.name }}"?</p>
+
+<form method="post" action="{% url 'delete_post' post.pk %}">
+  {% csrf_token %}
+  <input type="submit" value="Удалить">
+</form>

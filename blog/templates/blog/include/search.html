@@ -1,0 +1,10 @@
+<div class="single-sidebar-widget newsletter-widget ">
+    <h4 class="single-sidebar-widget__title">Поиск по сайту</h4>
+    <form action="{% url 'search' %}" method="get" class="form-group mt-30">
+        <div class="col-autos">
+            <input type="search" placeholder="Введите название..." name="q" class="form-control"
+                   required="">
+        </div>
+        <button type="submit" class="bbtns d-block  w-100 search_bt">Поиск</button>
+    </form>
+</div>
